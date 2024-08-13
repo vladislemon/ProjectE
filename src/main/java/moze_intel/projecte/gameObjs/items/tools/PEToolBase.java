@@ -506,13 +506,13 @@ public abstract class PEToolBase extends ItemMode
 			int offset = ((int) Math.pow(2, 2 + charge));
 
 			AxisAlignedBB bBox = player.boundingBox.expand(offset, offset / 2, offset);
-			List<Entity> list = world.getEntitiesWithinAABB(IShearable.class, bBox);
+			List<IShearable> list = world.getEntitiesWithinAABB(IShearable.class, bBox);
 
 			List<ItemStack> drops = Lists.newArrayList();
 
-			for (Entity ent : list)
+			for (IShearable target : list)
 			{
-				IShearable target = (IShearable) ent;
+                Entity ent = (Entity) target;
 
 				if (target.isShearable(stack, ent.worldObj, (int) ent.posX, (int) ent.posY, (int) ent.posZ)
 						&& consumeFuel(player, stack, emcCost, true)

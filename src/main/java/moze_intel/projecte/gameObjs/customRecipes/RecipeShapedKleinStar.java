@@ -27,7 +27,7 @@ public class RecipeShapedKleinStar implements IRecipe
 	 */
 	private ItemStack recipeOutput;
 	private boolean field_92101_f;
-	private static final String __OBFID = "CL_00000093";
+//	private static final String __OBFID = "CL_00000093";
 
 	public RecipeShapedKleinStar(int width, int height, ItemStack[] items, ItemStack output)
 	{
@@ -62,7 +62,7 @@ public class RecipeShapedKleinStar implements IRecipe
 			recipeOutput.setTagCompound(new NBTTagCompound());
 			KleinStar.setEmc(recipeOutput, storedEMC);
 		}
-		
+
 		for (int i = 0; i <= 3 - this.recipeWidth; ++i)
 		{
 			for (int j = 0; j <= 3 - this.recipeHeight; ++j)

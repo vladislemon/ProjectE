@@ -54,24 +54,24 @@ public class PECore
 {
 	public static final String MODID = "ProjectE";
 	public static final String MODNAME = "ProjectE";
-	public static final String VERSION = "@VERSION@";
+	public static final String VERSION = Tags.VERSION;
 	public static final GameProfile FAKEPLAYER_GAMEPROFILE = new GameProfile(UUID.fromString("590e39c7-9fb6-471b-a4c2-c0e539b2423d"), "[ProjectE]");
 	public static File CONFIG_DIR;
 	public static File PREGENERATED_EMC_FILE;
 
 	@Instance(MODID)
 	public static PECore instance;
-	
+
 	@SidedProxy(clientSide = "moze_intel.projecte.proxies.ClientProxy", serverSide = "moze_intel.projecte.proxies.ServerProxy")
 	public static IProxy proxy;
 
 	public static final List<String> uuids = Lists.newArrayList();
-	
+
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		CONFIG_DIR = new File(event.getModConfigurationDirectory(), "ProjectE");
-		
+
 		if (!CONFIG_DIR.exists())
 		{
 			CONFIG_DIR.mkdirs();
@@ -85,7 +85,7 @@ public class PECore
 		NBTWhitelistParser.init();
 
 		PacketHandler.register();
-		
+
 		NetworkRegistry.INSTANCE.registerGuiHandler(PECore.instance, new GuiHandler());
 
 		PlayerEvents pe = new PlayerEvents();
@@ -100,7 +100,7 @@ public class PECore
 		ObjHandler.register();
 		ObjHandler.addRecipes();
 	}
-	
+
 	@EventHandler
 	public void load(FMLInitializationEvent event)
 	{
@@ -108,17 +108,17 @@ public class PECore
 		proxy.registerRenderers();
 		AchievementHandler.init();
 	}
-	
+
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{
 		ObjHandler.registerPhiloStoneSmelting();
 		NBTWhitelistParser.readUserData();
 		proxy.initializeManual();
-		
+
 		Integration.init();
 	}
-	
+
 	@Mod.EventHandler
 	public void serverStarting(FMLServerStartingEvent event)
 	{
@@ -143,12 +143,12 @@ public class PECore
 		EMCMapper.map();
 
 		PELogger.logInfo("Registered " + EMCMapper.emc.size() + " EMC values. (took " + (System.currentTimeMillis() - start) + " ms)");
-		
+
 		File dir = new File(event.getServer().getEntityWorld().getSaveHandler().getWorldDirectory(), "ProjectE");
-		
+
 		if (!dir.exists())
 		{
-			dir.mkdirs(); 
+			dir.mkdirs();
 		}
 	}
 
@@ -157,7 +157,7 @@ public class PECore
 	{
 		TransmutationOffline.cleanAll();
 	}
-	
+
 	@Mod.EventHandler
 	public void serverQuit(FMLServerStoppedEvent event)
 	{

@@ -1,10 +1,10 @@
 [
 {
-  "modid": "ProjectE",
-  "name": "ProjectE",
+  "modid": "${modId}",
+  "name": "${modName}",
   "description": "A complete rewrite of EE2 for modern Minecraft versions.",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
+  "version": "${modVersion}",
+  "mcversion": "${minecraftVersion}",
   "logoFile": "assets/projecte/logo.png",
   "url": "http://minecraft.curseforge.com/mc-mods/226410-projecte",
   "updateUrl": "",
