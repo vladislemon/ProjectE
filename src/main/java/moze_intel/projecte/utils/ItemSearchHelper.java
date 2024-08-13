@@ -1,5 +1,6 @@
 package moze_intel.projecte.utils;
 
+import codechicken.nei.SearchField;
 import cpw.mods.fml.common.Loader;
 
 import net.minecraft.item.ItemStack;
@@ -9,7 +10,7 @@ import java.util.Locale;
 public abstract class ItemSearchHelper
 {
 	public static ItemSearchHelper create(String searchString) {
-		if (Loader.isModLoaded("NotEnoughItems")) {
+		if (Loader.isModLoaded("NotEnoughItems") && !SearchField.searchProviders.isEmpty()) {
 			return new ItemSearchHelperNEI(searchString);
 		} else {
 			return new DefaultSearch(searchString);
