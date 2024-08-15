@@ -3,8 +3,6 @@ package moze_intel.projecte.gameObjs.gui;
 import moze_intel.projecte.PECore;
 import moze_intel.projecte.gameObjs.container.TransmutationContainer;
 import moze_intel.projecte.gameObjs.container.inventory.TransmutationInventory;
-import moze_intel.projecte.network.PacketHandler;
-import moze_intel.projecte.network.packets.SearchUpdatePKT;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
@@ -14,6 +12,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
 import java.util.Locale;
 
 public class GUITransmutation extends GuiContainer
@@ -32,9 +32,9 @@ public class GUITransmutation extends GuiContainer
 		this.xSize = 228;
 		this.ySize = 196;
 	}
-	
+
 	@Override
-	public void initGui() 
+	public void initGui()
 	{
 		super.initGui();
 
@@ -49,19 +49,19 @@ public class GUITransmutation extends GuiContainer
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) 
+	protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3)
 	{
 		GL11.glColor4f(1F, 1F, 1F, 1F);
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 		this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 		this.textBoxFilter.drawTextBox();
 	}
-	
+
 	@Override
-	protected void drawGuiContainerForegroundLayer(int var1, int var2) 
+	protected void drawGuiContainerForegroundLayer(int var1, int var2)
 	{
 		this.fontRendererObj.drawString(StatCollector.translateToLocal("pe.transmutation.transmute"), 6, 8, 4210752);
-		String emc = String.format(StatCollector.translateToLocal("pe.emc.emc_tooltip_prefix") + " %,d", (int) inv.emc);
+		String emc = StatCollector.translateToLocal("pe.emc.emc_tooltip_prefix") + " " + formatSI(inv.emc);
 		this.fontRendererObj.drawString(emc, 6, this.ySize - 94, 4210752);
 
 		if (inv.learnFlag > 0)
@@ -74,7 +74,7 @@ public class GUITransmutation extends GuiContainer
 			this.fontRendererObj.drawString(StatCollector.translateToLocal("pe.transmutation.learned5"), 103, 70, 4210752);
 			this.fontRendererObj.drawString(StatCollector.translateToLocal("pe.transmutation.learned6"), 104, 78, 4210752);
 			this.fontRendererObj.drawString(StatCollector.translateToLocal("pe.transmutation.learned7"), 107, 86, 4210752);
-			
+
 			inv.learnFlag--;
 		}
 
@@ -89,13 +89,25 @@ public class GUITransmutation extends GuiContainer
 			this.fontRendererObj.drawString(StatCollector.translateToLocal("pe.transmutation.unlearned6"), 103, 70, 4210752);
 			this.fontRendererObj.drawString(StatCollector.translateToLocal("pe.transmutation.unlearned7"), 104, 78, 4210752);
 			this.fontRendererObj.drawString(StatCollector.translateToLocal("pe.transmutation.unlearned8"), 107, 86, 4210752);
-			
+
 			inv.unlearnFlag--;
 		}
 	}
-	
+
+    private String formatSI(double value) {
+        if (-100_000 < value && value < 100_000) {
+            return String.format("%,d", (int) value);
+        }
+        CharacterIterator ci = new StringCharacterIterator("kMGTPEZYRQ");
+        while (value <= -999_950 || value >= 999_950) {
+            value /= 1000;
+            ci.next();
+        }
+        return String.format("%.1f %c", value / 1000.0, ci.current());
+    }
+
 	@Override
-	public void updateScreen() 
+	public void updateScreen()
 	{
 		super.updateScreen();
 		this.textBoxFilter.updateCursorCounter();
@@ -104,7 +116,7 @@ public class GUITransmutation extends GuiContainer
 	@Override
 	protected void keyTyped(char par1, int par2)
 	{
-		if (this.textBoxFilter.isFocused()) 
+		if (this.textBoxFilter.isFocused())
 		{
 			this.textBoxFilter.textboxKeyTyped(par1, par2);
 

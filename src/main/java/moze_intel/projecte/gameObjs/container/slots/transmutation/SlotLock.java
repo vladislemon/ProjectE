@@ -12,19 +12,19 @@ import net.minecraft.item.ItemStack;
 public class SlotLock extends Slot
 {
 	private TransmutationInventory inv;
-	
+
 	public SlotLock(TransmutationInventory inv, int par2, int par3, int par4)
 	{
 		super(inv, par2, par3, par4);
 		this.inv = inv;
 	}
-	
+
 	@Override
 	public boolean isItemValid(ItemStack stack)
 	{
 		return EMCHelper.doesItemHaveEmc(stack);
 	}
-	
+
 	@Override
 	public void putStack(ItemStack stack)
 	{
@@ -32,14 +32,14 @@ public class SlotLock extends Slot
 		{
 			return;
 		}
-		
+
 		super.putStack(stack);
-		
+
 		if (stack.getItem() instanceof IItemEmc)
 		{
 			IItemEmc itemEmc = ((IItemEmc) stack.getItem());
-			int remainEmc = Constants.TILE_MAX_EMC - (int) Math.ceil(inv.emc);
-			
+			double remainEmc = Constants.TILE_MAX_EMC - inv.emc;
+
 			if (itemEmc.getStoredEmc(stack) >= remainEmc)
 			{
 				inv.addEmc(remainEmc);
@@ -50,11 +50,11 @@ public class SlotLock extends Slot
 				inv.addEmc(itemEmc.getStoredEmc(stack));
 				itemEmc.extractEmc(stack, itemEmc.getStoredEmc(stack));
 			}
-			
+
 			inv.handleKnowledge(stack.copy());
 			return;
 		}
-		
+
 		if (stack.getItem() != ObjHandler.tome)
 		{
 			inv.handleKnowledge(stack.copy());
@@ -64,15 +64,15 @@ public class SlotLock extends Slot
 			inv.updateOutputs();
 		}
 	}
-	
+
 	@Override
 	public void onPickupFromSlot(EntityPlayer par1EntityPlayer, ItemStack par2ItemStack)
 	{
 		super.onPickupFromSlot(par1EntityPlayer, par2ItemStack);
-		
+
 		inv.updateOutputs();
 	}
-	
+
 	@Override
 	public int getSlotStackLimit()
 	{
