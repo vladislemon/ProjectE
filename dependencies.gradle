@@ -36,11 +36,10 @@
 dependencies {
     implementation("com.github.GTNewHorizons:NotEnoughItems:2.8.110-GTNH:dev")
     implementation("com.github.GTNewHorizons:Chisel:2.17.5-GTNH:dev")
-    implementation("codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev")
-    implementation("codechicken:CodeChickenLib:1.7.10-1.1.1.110:dev")
-//    implementation("codechicken:NotEnoughItems:1.7.10-1.0.4.83:dev")
+    implementation("com.github.GTNewHorizons:CodeChickenCore:1.4.16:dev")
     implementation("com.github.GTNewHorizons:CraftTweaker:3.4.7:dev")
-    testImplementation(platform('org.junit:junit-bom:5.14.1'))
+    testImplementation(platform('org.junit:junit-bom:5.9.2'))
     testImplementation('org.junit.jupiter:junit-jupiter')
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation('org.junit.platform:junit-platform-engine')
+    testImplementation('org.junit.platform:junit-platform-launcher')
 }

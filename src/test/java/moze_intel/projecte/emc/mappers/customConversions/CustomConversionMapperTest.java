@@ -39,7 +39,7 @@ public class CustomConversionMapperTest {
         assertTrue(f.groups.containsKey("groupa"), "Map contains key for group");
         ConversionGroup group = f.groups.get("groupa");
         assertNotNull(group);
-        assertEquals("Group contains specific comment", group.comment, "A conversion group for something");
+        assertEquals("A conversion group for something", group.comment, "Group contains specific comment");
         assertEquals(0, group.conversions.size());
     }
 
