@@ -1,6 +1,6 @@
 package moze_intel.projecte.gameObjs.gui;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Iterator;
 import java.util.List;
 

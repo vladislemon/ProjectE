@@ -1,6 +1,6 @@
 package moze_intel.projecte.integration.NEI;
 
-import java.awt.*;
+import java.awt.Rectangle;
 import java.util.Map.Entry;
 
 import net.minecraft.client.Minecraft;
