@@ -18,6 +18,7 @@ import moze_intel.projecte.gameObjs.items.armor.GemArmorBase;
 import moze_intel.projecte.gameObjs.items.armor.GemChest;
 import moze_intel.projecte.gameObjs.items.armor.GemFeet;
 import moze_intel.projecte.gameObjs.items.armor.GemHelmet;
+import moze_intel.projecte.gameObjs.items.armor.GemLegs;
 import moze_intel.projecte.handlers.PlayerChecks;
 import moze_intel.projecte.utils.PEKeybind;
 import moze_intel.projecte.utils.PlayerHelper;
@@ -108,7 +109,11 @@ public class KeyPressPKT implements IMessage {
                 case MODE:
                     if (stack != null && stack.getItem() instanceof IModeChanger) {
                         ((IModeChanger) stack.getItem()).changeMode(player, stack);
-                    }
+                    } else if (player.inventory.armorInventory[1] != null
+                        && player.inventory.armorInventory[1].getItem() == ObjHandler.gemLegs) {
+                            ItemStack legs = player.inventory.armorItemInSlot(1);
+                            ((GemLegs) ObjHandler.gemLegs).toggleAcceleratedDescent(legs, player);
+                        }
                     break;
             }
             return null;
