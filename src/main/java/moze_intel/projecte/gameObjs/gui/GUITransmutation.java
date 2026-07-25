@@ -2,6 +2,7 @@ package moze_intel.projecte.gameObjs.gui;
 
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
+import java.util.Collections;
 import java.util.Locale;
 
 import net.minecraft.client.Minecraft;
@@ -48,6 +49,15 @@ public class GUITransmutation extends GuiContainer {
 
         this.buttonList.add(new GuiButton(1, this.xLocation + 125, this.yLocation + 100, 14, 14, "<"));
         this.buttonList.add(new GuiButton(2, this.xLocation + 193, this.yLocation + 100, 14, 14, ">"));
+    }
+
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        if (mouseX > 208 && mouseX < 267 && mouseY > 172 && mouseY < 184) {
+            String emc = String.format("%,d", (long) inv.emc);
+            drawHoveringText(Collections.singletonList(emc), mouseX, mouseY, this.fontRendererObj);
+        }
     }
 
     @Override
