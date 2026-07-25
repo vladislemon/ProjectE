@@ -1,8 +1,5 @@
 package moze_intel.projecte.emc;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
 import moze_intel.projecte.emc.arithmetics.FullFractionArithmetic;
 import moze_intel.projecte.emc.arithmetics.HiddenFractionArithmetic;
 import moze_intel.projecte.emc.arithmetics.IValueArithmetic;
@@ -14,18 +11,21 @@ import moze_intel.projecte.emc.generators.IValueGenerator;
 
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.math.Fraction;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class HiddenFractionSpecificTest
 {
 	public IValueGenerator<String, Integer> valueGenerator;
 	public IExtendedMappingCollector<String, Integer, IValueArithmetic<Fraction>> mappingCollector;
 
-	@Before
+	@BeforeEach
 	public void setup()
 	{
 		SimpleGraphMapper<String, Fraction, IValueArithmetic<Fraction>> mapper = new SimpleGraphMapper(new HiddenFractionArithmetic());

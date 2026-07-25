@@ -1,15 +1,16 @@
 package moze_intel.projecte.emc.mappers.customConversions;
 
-import static org.junit.Assert.*;
-
 import moze_intel.projecte.emc.mappers.customConversions.json.ConversionGroup;
 import moze_intel.projecte.emc.mappers.customConversions.json.CustomConversion;
 import moze_intel.projecte.emc.mappers.customConversions.json.CustomConversionFile;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.StringReader;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CustomConversionMapperTest
 {
@@ -36,7 +37,7 @@ public class CustomConversionMapperTest
 		CustomConversionFile f = CustomConversionMapper.parseJson(new StringReader(simpleFile));
 		assertNotNull(f);
 		assertEquals(1, f.groups.size());
-		assertTrue("Map contains key for group", f.groups.containsKey("groupa"));
+		assertTrue(f.groups.containsKey("groupa"), "Map contains key for group");
 		ConversionGroup group = f.groups.get("groupa");
 		assertNotNull(group);
 		assertEquals("Group contains specific comment", group.comment, "A conversion group for something");
@@ -60,7 +61,7 @@ public class CustomConversionMapperTest
 		CustomConversionFile f = CustomConversionMapper.parseJson(new StringReader(simpleFile));
 		assertNotNull(f);
 		assertEquals(1, f.groups.size());
-		assertTrue("Map contains key for group", f.groups.containsKey("groupa"));
+		assertTrue(f.groups.containsKey("groupa"), "Map contains key for group");
 		ConversionGroup group = f.groups.get("groupa");
 		assertNotNull(group);
 		assertEquals(3, group.conversions.size());
