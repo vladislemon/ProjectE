@@ -116,7 +116,7 @@ public class ToolTipEvent {
                             EnumChatFormatting.YELLOW + StatCollector.translateToLocal("pe.emc.stackemc_tooltip_prefix")
                                 + " "
                                 + EnumChatFormatting.WHITE
-                                + String.format("%,d", value * current.stackSize));
+                                + String.format("%,d", total));
                     }
 
                 }
