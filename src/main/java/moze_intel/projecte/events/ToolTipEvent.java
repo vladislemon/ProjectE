@@ -105,7 +105,7 @@ public class ToolTipEvent {
                     } catch (ArithmeticException e) {
                         total = Long.MAX_VALUE;
                     }
-                    if (total < 0 || total <= value || total > Integer.MAX_VALUE) {
+                    if (total < 0 || total <= value) {
                         event.toolTip.add(
                             EnumChatFormatting.YELLOW + StatCollector.translateToLocal("pe.emc.stackemc_tooltip_prefix")
                                 + " "
