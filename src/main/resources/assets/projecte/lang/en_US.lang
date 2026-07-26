@@ -316,6 +316,7 @@ pe.timewatch.mode=Time control mode: %s
 pe.timewatch.mode_switch=Time control mode set to: %s
 pe.timewatch.off=Off
 pe.timewatch.rw=Rewind
+pe.timewatch.slowdown=Slowdown
 pe.timewatch.tooltip1=Become the master of time
 pe.timewatch.tooltip2=Right click to change mode
 pe.timewatch.pedestal1=Gives %d bonus ticks to nearby blocks every tick

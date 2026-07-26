@@ -47,13 +47,15 @@ public class TimeWatch extends ItemCharge implements IModeChanger, IBauble, IPed
         "com.sci.torcherino.tile.TileTorcherino",
         "com.sci.torcherino.tile.TileCompressedTorcherino");
 
+    private static final byte MAX_CHARGE = 2;
+
     @SideOnly(Side.CLIENT)
     private IIcon ringOff;
     @SideOnly(Side.CLIENT)
     private IIcon ringOn;
 
     public TimeWatch() {
-        super("time_watch", (byte) 2);
+        super("time_watch", MAX_CHARGE);
         this.setNoRepair();
     }
 
@@ -70,8 +72,9 @@ public class TimeWatch extends ItemCharge implements IModeChanger, IBauble, IPed
             }
 
             byte current = getTimeBoost(stack);
+            byte next = (byte) (current == 3 ? 0 : current + 1);
 
-            setTimeBoost(stack, (byte) (current == 2 ? 0 : current + 1));
+            setTimeBoost(stack, next);
 
             player.addChatComponentMessage(
                 new ChatComponentTranslation(
@@ -100,17 +103,32 @@ public class TimeWatch extends ItemCharge implements IModeChanger, IBauble, IPed
 
         if (world.getGameRules()
             .getGameRuleBooleanValue("doDaylightCycle")) {
+            long worldTime = world.getWorldTime();
             if (timeControl == 1) {
-                if (world.getWorldTime() + ((getCharge(stack) + 1) * 4) > Long.MAX_VALUE) {
-                    world.setWorldTime(Long.MAX_VALUE);
-                } else {
-                    world.setWorldTime((world.getWorldTime() + ((getCharge(stack) + 1) * 4)));
-                }
+                world.setWorldTime((worldTime + ((getCharge(stack) + 1) * 4)));
             } else if (timeControl == 2) {
-                if (world.getWorldTime() - ((getCharge(stack) + 1) * 4) < 0) {
+                if (worldTime - ((getCharge(stack) + 1) * 4) < 0) {
                     world.setWorldTime(0);
                 } else {
-                    world.setWorldTime((world.getWorldTime() - ((getCharge(stack) + 1) * 4)));
+                    world.setWorldTime((worldTime - ((getCharge(stack) + 1) * 4)));
+                }
+            } else if (timeControl == 3) {
+                long prevWorldTime = getPrevWorldTime(stack);
+                long delta = worldTime - prevWorldTime;
+                if (delta == 1) {
+                    byte charge = getCharge(stack);
+                    if (charge == MAX_CHARGE) {
+                        world.setWorldTime(worldTime - 1);
+                    } else {
+                        long timeIncrease = world.rand.nextInt(1 << (charge + 1)) == 0 ? 1 : 0;
+                        long newTime = worldTime - 1 + timeIncrease;
+                        world.setWorldTime(newTime);
+                        if (newTime != prevWorldTime) {
+                            setPrevWorldTime(stack, newTime);
+                        }
+                    }
+                } else {
+                    setPrevWorldTime(stack, worldTime);
                 }
             }
         }
@@ -219,6 +237,8 @@ public class TimeWatch extends ItemCharge implements IModeChanger, IBauble, IPed
                 return "pe.timewatch.ff";
             case 2:
                 return "pe.timewatch.rw";
+            case 3:
+                return "pe.timewatch.slowdown";
             default:
                 return "ERROR_INVALID_MODE";
         }
@@ -229,7 +249,15 @@ public class TimeWatch extends ItemCharge implements IModeChanger, IBauble, IPed
     }
 
     private void setTimeBoost(ItemStack stack, byte time) {
-        stack.stackTagCompound.setByte("TimeMode", (byte) MathHelper.clamp_int(time, 0, 2));
+        stack.stackTagCompound.setByte("TimeMode", (byte) MathHelper.clamp_int(time, 0, 3));
+    }
+
+    private long getPrevWorldTime(ItemStack stack) {
+        return stack.stackTagCompound.getLong("PrevWorldTime");
+    }
+
+    private void setPrevWorldTime(ItemStack stack, long time) {
+        stack.stackTagCompound.setLong("PrevWorldTime", time);
     }
 
     public double getEmcPerTick(int charge) {
